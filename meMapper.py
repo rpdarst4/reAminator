@@ -14,20 +14,22 @@ mm=config.get('paths','methylmapper')
 
 ##############################################################################
 
-def plot(source,site=None,TSS=False,weights=None):
+def plot(source,GCG=True,site=None,TSS=False,weights=None):
     try: TSS=TSS*int(path.splitext(source)[0].split('+')[-1])
     except: TSS=False
     if not site: site='both'
     if not weights: weights='50,50'
     call([mm,'-in',source,'-site',site,'-weight',weights,'-gap','0',
-          '-plot',path.splitext(source)[0]+'.'+weights+'.png']
-         +bool(TSS)*['-tss',str(TSS)])
+          '-plot',path.splitext(source)[0]+(args.gcg*'wGCG')+'.'+weights+
+          '.png']+bool(TSS)*['-tss',str(TSS)]+(not GCG)*['-gcg','False'])
 
 ##############################################################################
 
 if __name__=='__main__':
     p=ap.ArgumentParser(description='')
     p.add_argument('seqs',help='FASTA-format file of sequences')
+    p.add_argument('-gcg',action='store_false',help='count GCG sites '
+                   '(default is to discard GCG information)')
     p.add_argument(
         '-Site',default='both',
         help='enter site "CG" or "GC" or leave blank for both')
@@ -39,7 +41,7 @@ if __name__=='__main__':
         help='enter CG,GC weighting e.g. "70,30"')
     args=p.parse_args()
     cmdline='{0} -in {1} -plot {2} -site {3} -weight {4} -gap 0'.format(
-        mm,args.seqs,path.splitext(args.seqs)[0]+'.png',
-        args.Site,args.Weights)
+        mm,args.seqs,path.splitext(args.seqs)[0]+((not args.gcg)*'wGCG')+
+        '.png',args.Site,args.Weights)+' -gcg'*(not args.gcg)
     print cmdline
     call(cmdline.split())
