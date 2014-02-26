@@ -14,21 +14,21 @@ mm=config.get('paths','methylmapper')
 
 ##############################################################################
 
-def plot(source,GCG=True,site=None,TSS=False,weights=None):
+def plot(source,GCG=False,site=None,TSS=False,weights=None):
     try: TSS=TSS*int(path.splitext(source)[0].split('+')[-1])
     except: TSS=False
     if not site: site='both'
     if not weights: weights='50,50'
     call([mm,'-in',source,'-site',site,'-weight',weights,'-gap','0',
-          '-plot',path.splitext(source)[0]+(args.gcg*'wGCG')+'.'+weights+
-          '.png']+bool(TSS)*['-tss',str(TSS)]+(not GCG)*['-gcg','False'])
+          '-plot',path.splitext(source)[0]+(GCG*'wGCG')+'.'+weights+
+          '.png']+bool(TSS)*['-tss',str(TSS)]+GCG*['-gcg','False'])
 
 ##############################################################################
 
 if __name__=='__main__':
     p=ap.ArgumentParser(description='')
     p.add_argument('seqs',help='FASTA-format file of sequences')
-    p.add_argument('-gcg',action='store_false',help='count GCG sites '
+    p.add_argument('-gcg',action='store_true',help='count GCG sites '
                    '(default is to discard GCG information)')
     p.add_argument(
         '-Site',default='both',

@@ -226,7 +226,7 @@ if __name__ == '__main__':
             a.length, a.bisulfite, a.uniques):
             if a.Weights or a.TSS:
                 if not a.Weights: a.Weights = '50,50'
-                meMapp.plot(contig,a.Sites,a.TSS,a.Weights)
+                meMapp.plot(contig,False,a.Sites,a.TSS,a.Weights)
             if a.Omelet:
                 A,B=path.split(contig)
                 if config.get('exists','PIL').lower()=='true':

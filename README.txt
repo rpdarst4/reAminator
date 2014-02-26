@@ -43,7 +43,7 @@ optional arguments:
 
 
 
-usage: bsAlign.py [-h] [-dest DEST] [-mask] [-pair PAIR] [-1] [-2] seqs refs
+usage: bsAlign.py [-h] [-Save SAVE] [-mask] [-pair PAIR] [-1] [-2] seqs refs
 
 positional arguments:
   seqs            FASTA-format file of read sequences
@@ -51,7 +51,7 @@ positional arguments:
 
 optional arguments:
   -h, --help      show this help message and exit
-  -dest DEST      output file name
+  -Save SAVE      output file name
   -mask           enable lowercase masking in references
   -pair PAIR      2nd FASTA-format file for paired-end sequencing
   -1, --a1_or_b1  convert BS-read G to A, i.e.seq. primer = a1 or b1
@@ -107,4 +107,4 @@ To extract all FASTA alignment files, and produce omelet.py PNG images:
 
 	$ python bsDraw.py EXAMPLE/reads.references.db -O
 
-(c) 2013, Russell Darst, University of FLorida 
+(c) 2013, Russell Darst, University of Florida 
