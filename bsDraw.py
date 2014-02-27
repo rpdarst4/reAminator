@@ -25,7 +25,7 @@ import sqlite3 as sql
 config = ConfigParser.ConfigParser()
 config.read(path.join(path.abspath(path.dirname(__file__)), 'reAminator.cfg'))
 if config.get('paths','methylmapper'): import meMapper as meMapp
-if config.get('exists','PIL').lower() == 'true': import omelet
+if config.get('exists','PIL').lower() == 'true': import gouache
 
 ##############################################################################
 
@@ -201,13 +201,13 @@ if __name__ == '__main__':
                     help='ratio of CG to GC weight for MethylMapper'
                     ' (e.g. 50,50)')
 
-    # option to call omelet
-    p.add_argument ('-Omelet', action='store_true',
-                    help='make omelet .png files')
+    # option to call gouache
+    p.add_argument ('-gouache', action='store_true',
+                    help='make gouache .png files')
 
     # option to adjust window length
     p.add_argument ('-window', default=600, type=int,
-                    help='basepair width of omelet .png files '
+                    help='basepair width of gouache .png files '
                     '(or zero for automatic)')
     
     a = p.parse_args()
@@ -227,11 +227,11 @@ if __name__ == '__main__':
             if a.Weights or a.TSS:
                 if not a.Weights: a.Weights = '50,50'
                 meMapp.plot(contig,False,a.Sites,a.TSS,a.Weights)
-            if a.Omelet:
+            if a.gouache:
                 A,B=path.split(contig)
                 if config.get('exists','PIL').lower()=='true':
-                    omelet.cook(path.join(A,B[2:]),
+                    gouache.cook(path.join(A,B[2:]),
                                 path.join(A,'a'+B[1:]),
                                 path.join(A,'b'+B[1:]),
                                 methyl=sites, window=a.window)
-                else: raise IOError('Called -Omelet but PIL is False')
+                else: raise IOError('Called -gouache but PIL is False')
