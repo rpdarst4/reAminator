@@ -29,24 +29,25 @@ if config.get('exists','PIL').lower() == 'true': import gouache
 
 ##############################################################################
 
-def snowflake(seqs, sites):
-    U = {''.join([str(seq[c].upper()) for c in sites]): seq for seq in seqs}
-    K = []
+def snowflake(seqs,sites):
+    U={tuple([str(seq[c].upper()) for c in sites]): n
+       for n,seq in enumerate(seqs)}
+    K=[]
     for u in sorted(U.keys()):
         for n,k in enumerate(K):
 
             # k in u: replace k 
-            if all([i in ('-', j) for i, j in zip(k, u)]): K[n] = u
+            if all([i in ('-',j) for i,j in zip(k,u)]): K[n]=u
 
             # mismatch: try next
-            elif not all([j in ('-', i) for i, j in zip(k, u)]): continue
+            elif not all([j in ('-',i) for i,j in zip(k,u)]): continue
 
             # u in k: skip
             break
 
         # u not found: add to K
         else: K.append(u)
-    return [U[k] for k in K]
+    return list(set([seqs[U[k]] for k in K]))
             
 ##############################################################################
 

@@ -6,7 +6,7 @@ bsDraw.py   -- extract aligned data from bsAlign.py output,
                filtering for length and percent deamination
 meMapper.py -- Python wrapper to call MethylMapper from bsDraw.py
 meTools.py  -- search for methylation patterns of interest
-omelet.py   -- draw PNG images of methylation patterns
+gouache.py  -- draw PNG images of methylation patterns
 
 REQUIREMENTS
 
@@ -24,7 +24,7 @@ Input files for barcode.py, bsAlign.py, and bsDraw.py must be in FASTA format.
 
 INSTALLATION
 
-Open the file "reAminator.cfg" in a text editor and update the paths to local BLAST+ and FASTools. Optional: update path to MethylMapper, and set whether Python Imaging Library is present (for omelet.py).
+Open the file "reAminator.cfg" in a text editor and update the paths to local BLAST+ and FASTools. Optional: update path to MethylMapper, and set whether Python Imaging Library is present (for gouache.py).
 
 USAGE
 
@@ -62,7 +62,7 @@ optional arguments:
 usage: bsDraw.py [-h] [-dest DEST] [-codes [CODES [CODES ...]]]
                  [-refs [REFS [REFS ...]]] [-strand STRAND]
                  [-bisulfite BISULFITE] [-length LENGTH] [-uniques]
-                 [-Sites SITES] [-TSS] [-Weights WEIGHTS] [-Omelet]
+                 [-Sites SITES] [-TSS] [-Weights WEIGHTS] [-gouache]
                  [-window WINDOW]
                  [alignments [alignments ...]]
 
@@ -85,8 +85,8 @@ optional arguments:
   -TSS                  read TSS distance after "+" symbol in ref. id (e.g.
                         >YFG+400)
   -Weights WEIGHTS      ratio of CG to GC weight for MethylMapper (e.g. 50,50)
-  -Omelet               make omelet .png files
-  -window WINDOW        basepair width of omelet .png files (or zero for
+  -gouache              make gouache .png files
+  -window WINDOW        basepair width of gouache .png files (or zero for
                         automatic)
 
 EXAMPLE OF USE
@@ -103,8 +103,8 @@ To extract all FASTA alignment files from the database EXAMPLE/reads.references.
 
 	$ python bsDraw.py EXAMPLE/reads.references.db
 
-To extract all FASTA alignment files, and produce omelet.py PNG images:
+To extract all FASTA alignment files, and produce gouache.py PNG images:
 
-	$ python bsDraw.py EXAMPLE/reads.references.db -O
+	$ python bsDraw.py EXAMPLE/reads.references.db -g
 
 (c) 2013, Russell Darst, University of Florida 
