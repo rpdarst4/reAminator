@@ -62,7 +62,10 @@ def check_IDs(records):
 ##############################################################################
     
 def deaminate(source,strand='ab'):
-    seqs,temp=[],tempnam(environ['HOME'])
+    seqs = []
+    temp = tempnam(environ['HOME'])
+    tmpidx = temp + '.idx'
+
     for i in strand:
 
         # fastools to convert strands
@@ -77,8 +80,10 @@ def deaminate(source,strand='ab'):
             seq.description=''
             seqs.append(seq)
             
-        remove(temp)
-        remove(temp+'.idx')
+        if os.path.isfile(temp):
+            remove(temp)
+        if os.path.isfile(tmpidx):
+            remove(tmpidx)
         
     with open(suffix(source,strand),'w') as handle:
         SeqIO.write(seqs,handle,'fasta')
