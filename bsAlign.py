@@ -14,6 +14,7 @@
 from Bio import SeqIO
 from Bio.Blast import NCBIXML
 from Bio.Seq import Seq
+import os
 from os import environ,path,remove,tempnam
 from subprocess import call
 from time import time
