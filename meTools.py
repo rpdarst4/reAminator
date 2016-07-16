@@ -2,7 +2,6 @@
 # (c) 2013, Russell Darst, University of Florida
 
 from Bio import SeqIO
-from numpy import NaN
 
 ##############################################################################
 
@@ -18,8 +17,8 @@ def quilt(pattern):
     # get inner bounds B and C, value V
     Q=[{'B': i, 'V': '#*'.find(j),'C': i + P[i:].find(' ') - 1}
        for i,j in enumerate(P) if ' ' == P[i-1] != j]
-    Q = [{'A': NaN, 'B': NaN, 'C': NaN, 'D': NaN, 'V': -1}
-         ]+Q+[{'A': NaN, 'B': NaN, 'C': NaN, 'D': NaN, 'V': -1}]
+    Q = [{'A': -1, 'B': -1, 'C': -1, 'D': -1, 'V': -1}
+         ]+Q+[{'A': -1, 'B': -1, 'C': -1, 'D': -1, 'V': -1}]
 
     # get outer bounds A and D
     N=range(len(Q))
@@ -63,7 +62,11 @@ def seek(obj, col=-1, keep='True', drop='False'):
     """
 
     # feed V, AD, BC values to functions
-    test = lambda f, x: f (x['V'], x['D']-x['A']-1, x['C']-x['B']+1)
+    test = lambda f, x: f (
+        x['V'],
+        (x['D']-x['A']-1, -1)[x['A'] < 0 or x['D'] < 0],
+        x['C']-x['B']+1)
+    
     for seq in obj:
         patt = quilt(seq[col])
 
