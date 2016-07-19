@@ -13,7 +13,7 @@ import ConfigParser
 # dependencies
 
 config = ConfigParser.ConfigParser()
-config.read(path.join(path.abspath(path.dirname(__file__)), 'omelet.cfg'))
+config.read(path.join(path.abspath(path.dirname(__file__)), 'gouache.cfg'))
 
 ##############################################################################
 
